@@ -1,2 +1,2 @@
 // Lists all the Docs with name ="Holbertan school" in the collection school
-db.school.find({name:"Holbertan school"}) 
+db.school.find({name: "Holbertan school" }).pretty()
