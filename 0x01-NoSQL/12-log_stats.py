@@ -8,7 +8,8 @@ from pymongo import MongoClient
 
 
 def print_log_stats():
-    """ log_stats.
+    """ 
+    log_stats.
     """
     client = MongoClient('mongodb://127.0.0.1:27017')
     logs_collection = client.logs.nginx
