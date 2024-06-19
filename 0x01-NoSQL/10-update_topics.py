@@ -5,7 +5,7 @@ function to update school collection
 """
 
 
-def schools_by_topic(mongo_collection, topic):
+def update_topics(mongo_collection, name, topics):
     """
     func doc
     """
