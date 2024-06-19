@@ -1,35 +1,37 @@
 #!/usr/bin/env python3
-""" 12. Log stats
-A Python script that provides some stats about Nginx logs stored in MongoDB
 """
+    script that provides some stats about Nginx logs stored in MongoDB:
 
-
+    - Database: logs
+    - Collection: nginx
+    - Display:
+        - first line: x logs where x is the number of documents in this
+          collection
+        - second line: Methods:
+        - 5 lines with the number of documents with the method = ["GET",
+          "POST", "PUT", "PATCH", "DELETE"] in this orde
+        - one line with the number of documents with:
+            - method=GET
+            - path=/status
+"""
 from pymongo import MongoClient
 
 
-def print_log_stats():
-    """ 
-    log_stats.
-    """
+def log_stats():
+    """ log_stats function """
     client = MongoClient('mongodb://127.0.0.1:27017')
-    logs_collection = client.logs.nginx
-    total = logs_collection.count_documents({})
-    get = logs_collection.count_documents({"method": "GET"})
-    post = logs_collection.count_documents({"method": "POST"})
-    put = logs_collection.count_documents({"method": "PUT"})
-    patch = logs_collection.count_documents({"method": "PATCH"})
-    delete = logs_collection.count_documents({"method": "DELETE"})
-    path = logs_collection.count_documents(
-        {"method": "GET", "path": "/status"})
-    print(f"{total} logs")
+    nginx = client.logs.nginx
+
+    print(f"{nginx.count_documents({})} logs")
     print("Methods:")
-    print(f"\tmethod GET: {get}")
-    print(f"\tmethod POST: {post}")
-    print(f"\tmethod PUT: {put}")
-    print(f"\tmethod PATCH: {patch}")
-    print(f"\tmethod DELETE: {delete}")
-    print(f"{path} status check")
+    print(f"\tmethod GET: {nginx.count_documents({'method': 'GET'})}")
+    print(f"\tmethod POST: {nginx.count_documents({'method': 'POST'})}")
+    print(f"\tmethod PUT: {nginx.count_documents({'method': 'PUT'})}")
+    print(f"\tmethod PATCH: {nginx.count_documents({'method': 'PATCH'})}")
+    print(f"\tmethod DELETE: {nginx.count_documents({'method': 'DELETE'})}")
+    print(f"{nginx.count_documents({'method': 'GET', 'path': '/status'})} "
+          "status check")
 
 
 if __name__ == "__main__":
-    print_log_stats()
+    log_stats()
